@@ -33,6 +33,7 @@ public class PokeSpawn extends Spawn
     public ZonedDateTime disappearTime;
     public String form;
     public Integer id;
+    public Integer formId;
     public Float iv;
     public Integer cp;
     public Integer level;
@@ -58,6 +59,7 @@ public class PokeSpawn extends Spawn
         super();
         this.disappearTime = null;
         this.form = null;
+        this.formId = form;
         this.suburb = null;
         this.disappearTime = disappearTime;
 
@@ -126,11 +128,8 @@ public class PokeSpawn extends Spawn
         this.gender = gender;
         getProperties().put("gender", getGender());
 
-        if (form != null && form != 0 && id == 201) {
-            this.id = id * 10 + form;
-        }
-        if (form != null) {
-            this.form = ((Pokemon.intToForm(form) == null) ? null : String.valueOf(Pokemon.intToForm(form)));
+        if (form != null && form != 0) {
+            this.form = ((Pokemon.formToString(id,form) == null) ? null : String.valueOf(Pokemon.formToString(id,form)));
         }
         getProperties().put("form", (this.form == null ? "" : this.form));
 
@@ -222,7 +221,7 @@ public class PokeSpawn extends Spawn
             embedBuilder.setColor(getColor());
             embedBuilder.setTitle(novaBot.getConfig().formatStr(getProperties(), (encountered()) ? novaBot.getConfig().getEncounterTitleFormatting(formatFile) : (novaBot.getConfig().getTitleFormatting(formatFile, "pokemon"))), novaBot.getConfig().formatStr(getProperties(), novaBot.getConfig().getTitleUrl(formatFile, "pokemon")));
             embedBuilder.setDescription(novaBot.getConfig().formatStr(getProperties(), (encountered()) ? novaBot.getConfig().getEncounterBodyFormatting(formatFile) : novaBot.getConfig().getBodyFormatting(formatFile, "pokemon")));
-            embedBuilder.setThumbnail(Pokemon.getIcon(this.id));
+            embedBuilder.setThumbnail(Pokemon.getIcon(this.id,this.formId));
             if (novaBot.getConfig().showMap(formatFile, "pokemon")) {
                 embedBuilder.setImage(this.getImage(formatFile));
             }
