@@ -448,7 +448,12 @@ public class Pokemon {
                 return 2036;
             }
             default: {
-                return Pokemon.VALID_NAMES.indexOf(pokeName) + 1;
+				if (id - 1 < 0 || id - 1 >= Pokemon.VALID_NAMES.size()) {
+					return "";
+				}
+				else {
+					return Pokemon.VALID_NAMES.get(id - 1);
+				}
             }
         }
     }
