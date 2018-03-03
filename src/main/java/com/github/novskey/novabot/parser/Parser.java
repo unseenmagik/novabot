@@ -232,7 +232,13 @@ public class Parser {
                         }
                         break;
                     case Pokemon:
-                        final Pokemon pokemon = new Pokemon(trimmed);
+                        final Pokemon pokemon;
+                        if (getInt(trimmed) != null) {
+                            pokemon = new Pokemon(Pokemon.idToName(getInt(trimmed)));
+                        }
+                        else {
+                            pokemon = new Pokemon(trimmed);
+                        }
                         if (pokemon.name == null) {
                             malformed.add(string);
                         }
