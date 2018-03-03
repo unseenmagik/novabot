@@ -87,6 +87,9 @@ public class Parser {
         } else if (valid.contains(ArgType.Pokemon) && Pokemon.nameToID(trimmed) != 0) {
             argument.setType(ArgType.Pokemon);
             argument.setParams(new Object[]{trimmed});
+        } else if (valid.contains(ArgType.Pokemon) && getInt(trimmed) != null && Pokemon.idToName(getInt(trimmed)) != "") {
+            argument.setType(ArgType.Pokemon);
+            argument.setParams(new Object[]{Pokemon.idToName(getInt(trimmed))});
         } else if (valid.contains(ArgType.Egg) && EGG_PATTERN.matcher(trimmed).matches()) {
             argument.setType(ArgType.Egg);
             Matcher matcher = ONLY_NUMBERS.matcher(trimmed);
