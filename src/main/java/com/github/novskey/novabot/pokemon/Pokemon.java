@@ -1,6 +1,7 @@
 package com.github.novskey.novabot.pokemon;
 
 import com.github.novskey.novabot.core.Location;
+import com.github.novskey.novabot.Util.StringLocalizer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -97,16 +98,11 @@ public class Pokemon {
     public Pokemon(final String name) {
         this.miniv = 0.0f;
         this.maxiv = 100.0f;
-        if (nameToID(name.toLowerCase()) == 0) {
-            if (name.toLowerCase().equals("nidoran f")) {
-                this.name = "nidoranf";
-            } else if (name.toLowerCase().equals("nidoran m")) {
-                this.name = "nidoranm";
-            } else {
-                this.name = null;
-            }
+		String nameLower = name.toLowerCase().replaceAll("\\s+","");
+        if (nameToID(nameLower) == 0) {
+			this.name = null;
         } else {
-            this.name = name.toLowerCase();
+            this.name = nameLower;
         }
     }
 
@@ -212,7 +208,8 @@ public class Pokemon {
 
     @Override
     public int hashCode() {
-        return (int) (name.hashCode() *
+        return (int) 
+				(name == null ? 1 : name.hashCode() *
                         ((minlvl+1) * (maxlvl+1)) *
                         ((mincp + 1) * (maxcp+1)) *
                         ((miniv + 1) * (maxiv + 1)) *
@@ -241,82 +238,82 @@ public class Pokemon {
     public static String idToName(final int id) {
         switch (id) {
             case 2011: {
-                return "unowna";
+                return StringLocalizer.getLocalString("Unowna").toLowerCase();
             }
             case 2012: {
-                return "unownb";
+                return StringLocalizer.getLocalString("Unownb").toLowerCase();
             }
             case 2013: {
-                return "unownc";
+                return StringLocalizer.getLocalString("Unownc").toLowerCase();
             }
             case 2014: {
-                return "unownd";
+                return StringLocalizer.getLocalString("Unownd").toLowerCase();
             }
             case 2015: {
-                return "unowne";
+                return StringLocalizer.getLocalString("Unowne").toLowerCase();
             }
             case 2016: {
-                return "unownf";
+                return StringLocalizer.getLocalString("Unownf").toLowerCase();
             }
             case 2017: {
-                return "unowng";
+                return StringLocalizer.getLocalString("Unowng").toLowerCase();
             }
             case 2018: {
-                return "unownh";
+                return StringLocalizer.getLocalString("Unownh").toLowerCase();
             }
             case 2019: {
-                return "unowni";
+                return StringLocalizer.getLocalString("Unowni").toLowerCase();
             }
             case 2020: {
-                return "unownj";
+                return StringLocalizer.getLocalString("Unownj").toLowerCase();
             }
             case 2021: {
-                return "unownk";
+                return StringLocalizer.getLocalString("Unownk").toLowerCase();
             }
             case 2022: {
-                return "unownl";
+                return StringLocalizer.getLocalString("Unownl").toLowerCase();
             }
             case 2023: {
-                return "unownm";
+                return StringLocalizer.getLocalString("Unownm").toLowerCase();
             }
             case 2024: {
-                return "unownn";
+                return StringLocalizer.getLocalString("Unownn").toLowerCase();
             }
             case 2025: {
-                return "unowno";
+                return StringLocalizer.getLocalString("Unowno").toLowerCase();
             }
             case 2026: {
-                return "unownp";
+                return StringLocalizer.getLocalString("Unownp").toLowerCase();
             }
             case 2027: {
-                return "unownq";
+                return StringLocalizer.getLocalString("Unownq").toLowerCase();
             }
             case 2028: {
-                return "unownr";
+                return StringLocalizer.getLocalString("Unownr").toLowerCase();
             }
             case 2029: {
-                return "unowns";
+                return StringLocalizer.getLocalString("Unowns").toLowerCase();
             }
             case 2030: {
-                return "unownt";
+                return StringLocalizer.getLocalString("Unownt").toLowerCase();
             }
             case 2031: {
-                return "unownu";
+                return StringLocalizer.getLocalString("Unownu").toLowerCase();
             }
             case 2032: {
-                return "unownv";
+                return StringLocalizer.getLocalString("Unownv").toLowerCase();
             }
             case 2033: {
-                return "unownw";
+                return StringLocalizer.getLocalString("Unownw").toLowerCase();
             }
             case 2034: {
-                return "unownx";
+                return StringLocalizer.getLocalString("Unownx").toLowerCase();
             }
             case 2035: {
-                return "unowny";
+                return StringLocalizer.getLocalString("Unowny").toLowerCase();
             }
             case 2036: {
-                return "unownz";
+                return StringLocalizer.getLocalString("Unownz").toLowerCase();
             }
             default: {
                 return Pokemon.VALID_NAMES.get(id - 1);
@@ -368,89 +365,87 @@ public class Pokemon {
     }
 
     public static int nameToID(final String pokeName) {
-        switch (pokeName) {
-            case "unowna": {
-                return 2011;
-            }
-            case "unownb": {
-                return 2012;
-            }
-            case "unownc": {
-                return 2013;
-            }
-            case "unownd": {
-                return 2014;
-            }
-            case "unowne": {
-                return 2015;
-            }
-            case "unownf": {
-                return 2016;
-            }
-            case "unowng": {
-                return 2017;
-            }
-            case "unownh": {
-                return 2018;
-            }
-            case "unowni": {
-                return 2019;
-            }
-            case "unownj": {
-                return 2020;
-            }
-            case "unownk": {
-                return 2021;
-            }
-            case "unownl": {
-                return 2022;
-            }
-            case "unownm": {
-                return 2023;
-            }
-            case "unownn": {
-                return 2024;
-            }
-            case "unowno": {
-                return 2025;
-            }
-            case "unownp": {
-                return 2026;
-            }
-            case "unownq": {
-                return 2027;
-            }
-            case "unownr": {
-                return 2028;
-            }
-            case "unowns": {
-                return 2029;
-            }
-            case "unownt": {
-                return 2030;
-            }
-            case "unownu": {
-                return 2031;
-            }
-            case "unownv": {
-                return 2032;
-            }
-            case "unownw": {
-                return 2033;
-            }
-            case "unownx": {
-                return 2034;
-            }
-            case "unowny": {
-                return 2035;
-            }
-            case "unownz": {
-                return 2036;
-            }
-            default: {
-                return Pokemon.VALID_NAMES.indexOf(pokeName) + 1;
-            }
-        }
+		if (pokeName.equals(StringLocalizer.getLocalString("Unowna").toLowerCase())) {
+			return 2011;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownb").toLowerCase())) {
+			return 2012;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownc").toLowerCase())) {
+			return 2013;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownd").toLowerCase())) {
+			return 2014;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unowne").toLowerCase())) {
+			return 2015;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownf").toLowerCase())) {
+			return 2016;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unowng").toLowerCase())) {
+			return 2017;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownh").toLowerCase())) {
+			return 2018;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unowni").toLowerCase())) {
+			return 2019;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownj").toLowerCase())) {
+			return 2020;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownk").toLowerCase())) {
+			return 2021;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownl").toLowerCase())) {
+			return 2022;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownm").toLowerCase())) {
+			return 2023;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownn").toLowerCase())) {
+			return 2024;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unowno").toLowerCase())) {
+			return 2025;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownp").toLowerCase())) {
+			return 2026;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownq").toLowerCase())) {
+			return 2027;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownr").toLowerCase())) {
+			return 2028;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unowns").toLowerCase())) {
+			return 2029;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownt").toLowerCase())) {
+			return 2030;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownu").toLowerCase())) {
+			return 2031;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownv").toLowerCase())) {
+			return 2032;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownw").toLowerCase())) {
+			return 2033;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownx").toLowerCase())) {
+			return 2034;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unowny").toLowerCase())) {
+			return 2035;
+		}
+		else if (pokeName.equals(StringLocalizer.getLocalString("Unownz").toLowerCase())) {
+			return 2036;
+		}
+		else {
+			return Pokemon.VALID_NAMES.indexOf(pokeName) + 1;
+		}
     }
 
     private static double baseAtk(int id) {
@@ -471,8 +466,9 @@ public class Pokemon {
             System.out.println(String.format("move not found in json for id %s", id));
             return "unkn";
         }else {
-            return moveObj.get("name").getAsString();
-        }
+			String name = moveObj.get("name").getAsString().replaceAll("\\s","");
+            return StringLocalizer.getLocalString(name);        
+		}
     }
 
     public static void main(String[] args) {
@@ -532,8 +528,9 @@ public class Pokemon {
 
         for (int i = 1; i <= 721; i++) {
             JsonObject pokeObj = pokemonInfo.getAsJsonObject(Integer.toString(i));
-            if (pokeObj != null) names.add(pokeObj.get("name").getAsString().toLowerCase());
-        }
+            String name = pokeObj.get("name").getAsString();
+            if (pokeObj != null) names.add(StringLocalizer.getLocalString(name).toLowerCase());
+		}
         return names;
     }
 
