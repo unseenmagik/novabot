@@ -54,6 +54,21 @@ public enum Team {
         }
         return "";
     }
+    
+    public String getStringForEmote() {
+        switch (this) {
+            case Uncontested:
+                return "Uncontested";
+            case Valor:
+                return "Valor";
+            case Mystic:
+                return "Mystic";
+            case Instinct:
+                return "Instinct";
+        }
+        return "";
+    }
+
 
     public String getEmote() {
         if(emotes.get(this) != null) {
