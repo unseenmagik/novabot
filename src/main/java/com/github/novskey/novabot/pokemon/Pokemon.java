@@ -111,7 +111,7 @@ public class Pokemon {
     }
 
     public Pokemon(final int id, final float min_iv, final float max_iv) {
-        this(idToName(id));
+		this(idToName(id));
         this.miniv = min_iv;
         this.maxiv = max_iv;
     }
@@ -127,14 +127,14 @@ public class Pokemon {
         this.maxcp = maxcp;
     }
 
-    private Pokemon(final int id) {
+    public Pokemon(final int id) {
+		this(idToName(id));
         this.miniv = 0.0f;
         this.maxiv = 100.0f;
-        this.name = idToName(id);
     }
 
     public Pokemon(final int id, final Location location, final float miniv, final float maxiv) {
-        this(id);
+		this(idToName(id));
         this.location = location;
         this.miniv = miniv;
         this.maxiv = maxiv;
@@ -318,8 +318,13 @@ public class Pokemon {
             case 2036: {
                 return "unownz";
             }
-            default: {
-                return Pokemon.VALID_NAMES.get(id - 1);
+			default: {
+				if (id - 1 < 0 || id - 1 >= Pokemon.VALID_NAMES.size()) {
+					return null;
+				}
+				else {
+					return Pokemon.VALID_NAMES.get(id - 1);
+				}
             }
         }
     }
@@ -447,7 +452,7 @@ public class Pokemon {
             case "unownz": {
                 return 2036;
             }
-            default: {
+			default: {
                 return Pokemon.VALID_NAMES.indexOf(pokeName) + 1;
             }
         }
