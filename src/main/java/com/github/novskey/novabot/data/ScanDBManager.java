@@ -567,7 +567,7 @@ public class ScanDBManager  {
                     break;
             }
 
-            if (scannerDb.getProtocol().equals("mysql")) {
+            if (scannerDb.getProtocol().equals("mysql") && scannerDb.getScannerType() != Monocle) {
                 statement.setString(offset,
                                     String.valueOf(novaBot.getConfig().getMinSecondsLeft()));
                 offset++;

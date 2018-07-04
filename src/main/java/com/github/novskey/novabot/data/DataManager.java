@@ -136,9 +136,9 @@ public class DataManager implements IDataBase {
     }
 
     @Override
-    public void addUser(String userID, String botToken) {
-        dbCache.addUser(userID, botToken);
+    public User addUser(String userID, String botToken) {
         settingsDbManager.addUser(userID, botToken);
+        return dbCache.addUser(userID, botToken);
     }
 
     @Override
@@ -342,6 +342,12 @@ public class DataManager implements IDataBase {
     public void setZoneId(double lat, double lon, ZoneId zoneId) {
         dbCache.setZoneId(lat, lon, zoneId);
         settingsDbManager.setZoneId(lat, lon, zoneId);
+    }
+
+    @Override
+    public void verifyUser(String id) {
+        dbCache.verifyUser(id);
+        settingsDbManager.verifyUser(id);
     }
 
     public int countSpawns(int id, TimeUnit timeUnit, int intervalLength) {

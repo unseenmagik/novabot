@@ -18,6 +18,7 @@ import com.github.novskey.novabot.raids.Raid;
 import com.github.novskey.novabot.raids.RaidLobby;
 import net.dv8tion.jda.core.*;
 import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -195,16 +196,22 @@ public class NovaBot {
         if (!msg.startsWith(getLocalString("Prefix"))) {
             return;
         }
-
         com.github.novskey.novabot.data.User user = dataManager.getUser(author.getId());
 
         if (user == null) {
-            dataManager.addUser(author.getId(), getNextUserBotToken());
+            user = dataManager.addUser(author.getId(), getNextUserBotToken());
         }else{
             if (user.getBotToken() == null){
                 dataManager.setBotToken(author.getId(),getNextUserBotToken());
             }
         }
+
+        if (!user.isVerified() && channel.getType() == ChannelType.PRIVATE){
+            return;
+        }else if (!user.isVerified() && channel.getType() != ChannelType.PRIVATE){
+            dataManager.verifyUser(author.getId());
+        }
+
 
         if (msg.equals(getLocalString("ApiQuotasCommand"))){
             if (isAdmin(author)){
@@ -236,6 +243,7 @@ public class NovaBot {
         }
 
         if (msg.startsWith(getLocalString("JoinRaidCommand")) && getConfig().isRaidOrganisationEnabled()) {
+
             String groupCode = msg.substring(msg.indexOf(" ") + 1).trim();
 
             RaidLobby lobby = lobbyManager.getLobby(groupCode);
@@ -1278,5 +1286,74 @@ public class NovaBot {
 
     public void setSuburbs(SuburbManager suburbs) {
         this.suburbs = suburbs;
+    }
+
+    public void parseReactionAdd(boolean mainBot, MessageReactionAddEvent event) {
+        User author = event.getUser();
+        MessageChannel channel = event.getChannel();
+        com.github.novskey.novabot.data.User user = dataManager.getUser(author.getId());
+
+        if (user == null) {
+            user = dataManager.addUser(author.getId(), getNextUserBotToken());
+        }else{
+            if (user.getBotToken() == null){
+                dataManager.setBotToken(author.getId(),getNextUserBotToken());
+            }
+        }
+
+        if (!user.isVerified() && channel.getType() == ChannelType.PRIVATE){
+            return;
+        }else if (!user.isVerified() && channel.getType() != ChannelType.PRIVATE){
+            dataManager.verifyUser(author.getId());
+        }
+
+        if (!mainBot || !getConfig().isRaidOrganisationEnabled()) return;
+
+        if (event.getUser().isBot()) return;
+
+        if (!event.getReactionEmote().getName().equals(WHITE_GREEN_CHECK)) return;
+
+        Message message = event.getChannel().getMessageById(event.getMessageId()).complete();
+
+        if (!message.getAuthor().isBot()) return;
+
+        novabotLog.debug("white green check reaction added to a bot message that contains an embed!");
+
+        String content;
+        if (message.getEmbeds().size() > 0) {
+            content = message.getEmbeds().get(0).getDescription();
+        } else {
+            content = message.getContentDisplay();
+        }
+
+        int    joinIndex = content.indexOf("!joinraid") + 10;
+        String lobbyCode = content.substring(joinIndex, content.substring(joinIndex).indexOf("`") + joinIndex).trim();
+
+        novabotLog.info("Message clicked was for lobbycode " + lobbyCode);
+
+        RaidLobby lobby = lobbyManager.getLobby(lobbyCode);
+
+        if (lobby == null) {
+            event.getChannel().sendMessageFormat("%s, that lobby has ended and cannot be joined.", event.getMember()).queue();
+            return;
+        }
+
+        if (!lobby.containsUser(event.getUser().getId())) {
+
+            lobby.joinLobby(event.getUser().getId());
+
+            if (event.getChannelType() == ChannelType.PRIVATE) {
+                event.getChannel().sendMessageFormat("%s you have been placed in %s. There are now %s users in the lobby.", event.getUser(), lobby.getChannel(), lobby.memberCount()).queue();
+            }
+
+            alertRaidChats(getConfig().getRaidChats(lobby.spawn.getGeofences()), String.format(
+                    "%s joined %s raid in %s. There are now %s users in the lobby. Join the lobby by clicking the ✅ or by typing `!joinraid %s`.",
+                    guild.getMember(event.getUser()).getAsMention(),
+                    (lobby.spawn.bossId == 0 ? String.format("lvl %s egg", lobby.spawn.raidLevel) : lobby.spawn.getProperties().get("pkmn")),
+                    lobby.getChannel().getAsMention(),
+                    lobby.memberCount(),
+                    lobby.lobbyCode
+            ));
+        }
     }
 }

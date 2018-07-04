@@ -22,7 +22,7 @@ public interface IDataBase {
 
     void addRaid(String userID, Raid raid);
 
-    void addUser(String userID, String botToken);
+    User addUser(String userID, String botToken);
 
     void clearPreset(String id, String[] presets);
 
@@ -95,4 +95,6 @@ public interface IDataBase {
     ZoneId getZoneId(double lat, double lon);
 
     void setZoneId(double lat, double lon, ZoneId zoneId);
+
+    void verifyUser(String id);
 }

@@ -125,55 +125,7 @@ public class MessageListener extends ListenerAdapter {
 
     @Override
     public void onMessageReactionAdd(MessageReactionAddEvent event) {
-
-        if (!mainBot || !novaBot.getConfig().isRaidOrganisationEnabled()) return;
-
-        if (event.getUser().isBot()) return;
-
-        if (!event.getReactionEmote().getName().equals(WHITE_GREEN_CHECK)) return;
-
-        Message message = event.getChannel().getMessageById(event.getMessageId()).complete();
-
-        if (!message.getAuthor().isBot()) return;
-
-        novaBot.novabotLog.debug("white green check reaction added to a bot message that contains an embed!");
-
-        String content;
-        if (message.getEmbeds().size() > 0) {
-            content = message.getEmbeds().get(0).getDescription();
-        } else {
-            content = message.getContentDisplay();
-        }
-
-        int    joinIndex = content.indexOf("!joinraid") + 10;
-        String lobbyCode = content.substring(joinIndex, content.substring(joinIndex).indexOf("`") + joinIndex).trim();
-
-        novaBot.novabotLog.info("Message clicked was for lobbycode " + lobbyCode);
-
-        RaidLobby lobby = novaBot.lobbyManager.getLobby(lobbyCode);
-
-        if (lobby == null) {
-            event.getChannel().sendMessageFormat("%s, that lobby has ended and cannot be joined.", event.getMember()).queue();
-            return;
-        }
-
-        if (!lobby.containsUser(event.getUser().getId())) {
-
-            lobby.joinLobby(event.getUser().getId());
-
-            if (event.getChannelType() == ChannelType.PRIVATE) {
-                event.getChannel().sendMessageFormat("%s you have been placed in %s. There are now %s users in the lobby.", event.getUser(), lobby.getChannel(), lobby.memberCount()).queue();
-            }
-
-            novaBot.alertRaidChats(novaBot.getConfig().getRaidChats(lobby.spawn.getGeofences()), String.format(
-                    "%s joined %s raid in %s. There are now %s users in the lobby. Join the lobby by clicking the ✅ or by typing `!joinraid %s`.",
-                    novaBot.guild.getMember(event.getUser()).getAsMention(),
-                    (lobby.spawn.bossId == 0 ? String.format("lvl %s egg", lobby.spawn.raidLevel) : lobby.spawn.getProperties().get("pkmn")),
-                    lobby.getChannel().getAsMention(),
-                    lobby.memberCount(),
-                    lobby.lobbyCode
-                                                                                                         ));
-        }
+        novaBot.parseReactionAdd(mainBot, event);
     }
 
     @Override
