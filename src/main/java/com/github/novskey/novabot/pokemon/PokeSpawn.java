@@ -1,6 +1,7 @@
 package com.github.novskey.novabot.pokemon;
 
 import com.github.novskey.novabot.Util.UtilityFunctions;
+import com.github.novskey.novabot.Util.StringLocalizer;
 import com.github.novskey.novabot.core.NovaBot;
 import com.github.novskey.novabot.core.Spawn;
 import com.github.novskey.novabot.core.Types;
@@ -52,7 +53,7 @@ public class PokeSpawn extends Spawn
     public PokeSpawn(int i) {
         super();
         this.id = i;
-        getProperties().put("pkmn",Pokemon.getFilterName(i));
+        getProperties().put("pkmn",StringLocalizer.getLocalString(Pokemon.getFilterName(i)));
     }
 
     public PokeSpawn(final int id, final double lat, final double lon, final ZonedDateTime disappearTime, final Integer attack, final Integer defense, final Integer stamina, final Integer move1, final Integer move2, final float weight, final float height, final Integer gender, final Integer form, Integer cp) {
@@ -72,7 +73,7 @@ public class PokeSpawn extends Spawn
         this.id = id;
         getProperties().put("pkmn_id", String.valueOf(id));
 
-        getProperties().put("pkmn",Pokemon.getFilterName(id));
+        getProperties().put("pkmn",StringLocalizer.getLocalString(Pokemon.getFilterName(id)));
 
 
         if (novaBot.suburbsEnabled()) {

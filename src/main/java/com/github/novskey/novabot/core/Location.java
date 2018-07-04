@@ -113,7 +113,7 @@ public class Location {
             case Geofence:
                 return GeofenceIdentifier.listToString(this.geofenceIdentifiers);
             case All:
-                return getLocalString("all");
+                return getLocalString("All");
         }
 
         return "";

@@ -1,6 +1,7 @@
 package com.github.novskey.novabot.raids;
 
 import com.github.novskey.novabot.Util.UtilityFunctions;
+import com.github.novskey.novabot.Util.StringLocalizer;
 import com.github.novskey.novabot.core.Spawn;
 import com.github.novskey.novabot.core.Team;
 import com.github.novskey.novabot.core.Types;
@@ -91,7 +92,7 @@ public class RaidSpawn extends Spawn {
         this.setMove_2(move_2);
 
         if (bossId != 0) {
-            getProperties().put("pkmn", Pokemon.getFilterName(bossId));
+            getProperties().put("pkmn", StringLocalizer.getLocalString(Pokemon.getFilterName(bossId)));
             getProperties().put("cp", String.valueOf(bossCp));
             getProperties().put("lvl20cp", String.valueOf(Pokemon.maxCpAtLevel(bossId, 20)));
             getProperties().put("lvl25cp", String.valueOf(Pokemon.maxCpAtLevel(bossId, 25)));

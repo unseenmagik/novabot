@@ -361,7 +361,7 @@ public class SettingsDBManager implements IDataBase {
                      "AND (min_cp=?) " +
                      "AND (max_cp=?)")) {
             statement.setString(1, userID);
-            statement.setString(2, (pokemon.getLocation().toString() == null) ? "All" : pokemon.getLocation().toString());
+            statement.setString(2, (pokemon.getLocation().toDbString() == null) ? "all" : pokemon.getLocation().toDbString());
             statement.setDouble(3, pokemon.getID());
             statement.setDouble(4, pokemon.miniv);
             statement.setDouble(5, pokemon.maxiv);

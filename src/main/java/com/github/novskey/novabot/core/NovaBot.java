@@ -1197,11 +1197,11 @@ public class NovaBot {
         novabotLog.info(String.format("Finished loading type emojis: %s", Types.emotes.toString()));
 
         for (Team team : Team.values()) {
-            List<Emote> found = jda.getEmotesByName(team.toString(), true);
+            List<Emote> found = jda.getEmotesByName(team.getStringForEmote(), true);
             String path = null;
             if (found.size() == 0) try {
-                path = "static/icons/" + team.toString().toLowerCase() + ".png";
-                guild.getController().createEmote(team.toString().toLowerCase(), Icon.from(Paths.get(path).toFile())).queue(emote ->
+                path = "static/icons/" + team.getStringForEmote().toLowerCase() + ".png";
+                guild.getController().createEmote(team.getStringForEmote().toLowerCase(), Icon.from(Paths.get(path).toFile())).queue(emote ->
                         Team.emotes.put(team, emote));
             } catch (IOException | IllegalArgumentException e) {
                 novabotLog.warn(String.format("Couldn't find emote file: %s, ignoring.", path));

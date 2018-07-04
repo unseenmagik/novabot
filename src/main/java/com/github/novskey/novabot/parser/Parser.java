@@ -24,7 +24,7 @@ public class Parser {
     private static final Pattern CP_PATTERN = Pattern.compile("(cp[0-9]+)|([0-9]+cp)");
     private static final Pattern IV_PATTERN = Pattern.compile("iv[0-9]+|([0-9]+iv)|[0-9]+");
     private static final Pattern EGG_PATTERN = Pattern.compile("egg[1-5]");
-
+	private static final Pattern POKE_PATTERN = Pattern.compile("p[0-9]+|pid[0-9]+|poke[0-9]+|pokemon[0-9]+");
 
     private final NovaBot novaBot;
 
@@ -87,6 +87,9 @@ public class Parser {
         } else if (valid.contains(ArgType.Pokemon) && Pokemon.nameToID(trimmed) != 0) {
             argument.setType(ArgType.Pokemon);
             argument.setParams(new Object[]{trimmed});
+        } else if (valid.contains(ArgType.Pokemon) && POKE_PATTERN.matcher(trimmed).matches()) {
+            argument.setType(ArgType.Pokemon);
+            argument.setParams(new Object[]{Pokemon.idToName(getInt(trimmed.replaceAll("[^\\d.]", "")))});
         } else if (valid.contains(ArgType.Egg) && EGG_PATTERN.matcher(trimmed).matches()) {
             argument.setType(ArgType.Egg);
             Matcher matcher = ONLY_NUMBERS.matcher(trimmed);
@@ -229,7 +232,13 @@ public class Parser {
                         }
                         break;
                     case Pokemon:
-                        final Pokemon pokemon = new Pokemon(trimmed);
+                        final Pokemon pokemon;
+                        if (POKE_PATTERN.matcher(trimmed).matches()) {
+                            pokemon = new Pokemon(getInt(trimmed.replaceAll("[^\\d.]", "")));
+                        }
+                        else {
+                            pokemon = new Pokemon(trimmed);
+                        }
                         if (pokemon.name == null) {
                             malformed.add(string);
                         }
