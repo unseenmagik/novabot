@@ -34,6 +34,7 @@ public class RaidSpawn extends Spawn {
     public ZonedDateTime raidEnd;
     public ZonedDateTime battleStart;
     public int bossId;
+    public Integer formId;
     public int raidLevel;
     public String gymId;
     private String name;
@@ -51,11 +52,12 @@ public class RaidSpawn extends Spawn {
         }
     }
 
-    public RaidSpawn(String name, String gymId, double lat, double lon, Team team, ZonedDateTime raidEnd, ZonedDateTime battleStart, int bossId, int bossCp, int move_1, int move_2, int raidLevel) {
+    public RaidSpawn(String name, String gymId, double lat, double lon, Team team, ZonedDateTime raidEnd, ZonedDateTime battleStart, int bossId, int bossCp, int move_1, int move_2, int raidLevel, Integer form) {
         this.name = name;
         getProperties().put("gym_name", name);
 
         this.gymId = gymId;
+        this.formId = form;
 
         this.lat = lat;
         getProperties().put("lat", String.valueOf(lat));
@@ -248,7 +250,7 @@ public class RaidSpawn extends Spawn {
                     return LEGENDARY_EGG;
             }
         }
-        return Pokemon.getIcon(bossId, null);
+        return Pokemon.getIcon(novaBot.getConfig().getIconUrl(), bossId, formId);
     }
 
     public String getLobbyCode() {

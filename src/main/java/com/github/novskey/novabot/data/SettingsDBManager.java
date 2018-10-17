@@ -898,7 +898,8 @@ public class SettingsDBManager implements IDataBase {
                 155555,
                 18,
                 22,
-                5);
+                5,
+                null);
 
         System.out.println(novaBot.dataManager.getUserIDsToNotify(spawn));
 
@@ -913,7 +914,8 @@ public class SettingsDBManager implements IDataBase {
                 155555,
                 18,
                 22,
-                4);
+                4,
+                null);
 
         System.out.println(novaBot.dataManager.getUserIDsToNotify(spawn));
 
@@ -928,7 +930,8 @@ public class SettingsDBManager implements IDataBase {
                 155555,
                 18,
                 22,
-                3);
+                3,
+                null);
 
         System.out.println(novaBot.dataManager.getUserIDsToNotify(spawn));
 
@@ -943,7 +946,8 @@ public class SettingsDBManager implements IDataBase {
                 155555,
                 18,
                 22,
-                2);
+                2,
+                null);
 
         System.out.println(novaBot.dataManager.getUserIDsToNotify(spawn));
 
@@ -958,7 +962,8 @@ public class SettingsDBManager implements IDataBase {
                 155555,
                 18,
                 22,
-                1);
+                1,
+                null);
 
         System.out.println(novaBot.dataManager.getUserIDsToNotify(spawn));
     }

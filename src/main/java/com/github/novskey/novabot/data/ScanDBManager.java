@@ -568,7 +568,7 @@ public class ScanDBManager {
                         int move_1 = rs.getInt(11);
                         int move_2 = rs.getInt(12);
 
-                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel);
+                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel, null);
                         break;
                     case Hydro74000Monocle:
                         name = rs.getString(1);
@@ -584,7 +584,7 @@ public class ScanDBManager {
                         move_1 = rs.getInt(11);
                         move_2 = rs.getInt(12);
 
-                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel);
+                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel, null);
                         break;
                     case Monocle:
                         gymId = rs.getString(1);
@@ -598,7 +598,7 @@ public class ScanDBManager {
                         move_1 = rs.getInt(9);
                         move_2 = rs.getInt(10);
 
-                        raidSpawn = new RaidSpawn("unkn", gymId, lat, lon, team, raidEnd, battleStart, bossId, (bossId > 0 ? Pokemon.getRaidBossCp(bossId, raidLevel) : 0), move_1, move_2, raidLevel);
+                        raidSpawn = new RaidSpawn("unkn", gymId, lat, lon, team, raidEnd, battleStart, bossId, (bossId > 0 ? Pokemon.getRaidBossCp(bossId, raidLevel) : 0), move_1, move_2, raidLevel, null);
                         break;
                     case RealDeviceMap:
                         name = rs.getString(1);
