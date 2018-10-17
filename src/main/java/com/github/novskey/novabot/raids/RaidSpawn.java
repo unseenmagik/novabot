@@ -102,6 +102,11 @@ public class RaidSpawn extends Spawn {
             getProperties().put("quick_move_type_icon",(move_1 == 0) ? "unkn" : Types.getEmote(Pokemon.getMoveType(move_1)));
             getProperties().put("charge_move", (move_2 == 0) ? "unkn" : Pokemon.moveName(move_2));
             getProperties().put("charge_move_type_icon",(move_2 == 0) ? "unkn" : Types.getEmote(Pokemon.getMoveType(move_2)));
+            String formStr = null;
+            if (formId != null && formId != 0) {
+                formStr = ((Pokemon.formToString(bossId,formId) == null) ? null : String.valueOf(Pokemon.formToString(bossId,formId)));
+            }
+            getProperties().put("form", (formStr == null ? "" : formStr));
         }
 
         this.raidLevel = raidLevel;
