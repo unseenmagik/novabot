@@ -154,14 +154,13 @@ public class Pokemon {
         return nameToID(this.name);
     }
 
-    public static String getIcon(final int id, Integer form) {
-        String url = "https://bitbucket.org/anzmap/sprites/raw/HEAD/";
+    public static String getIcon(String url, final int id, Integer form) {
         if (form != null && form != 0){
             url = url +  id + "-" + form;
         } else {
             url += id;
         }
-        return url + ".png?4";
+        return url + ".png?5";
     }
 
     public Location getLocation() {
