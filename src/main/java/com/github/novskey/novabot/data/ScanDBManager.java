@@ -255,7 +255,8 @@ public class ScanDBManager {
                         "raid_level," +
                         "raid_pokemon_cp," +
                         "raid_pokemon_move_1," +
-                        "raid_pokemon_move_2" +
+                        "raid_pokemon_move_2," +
+                        "raid_pokemon_form " +
                         "FROM gym " +
                         "WHERE id = ? AND raid_end_timestamp > " +
                         (scannerDb.getProtocol().equals("mysql")
@@ -309,7 +310,7 @@ public class ScanDBManager {
                         int move_1 = rs.getInt(11);
                         int move_2 = rs.getInt(12);
 
-                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel);
+                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel, null);
                         break;
                     case Hydro74000Monocle:
                         name = rs.getString(1);
@@ -324,7 +325,7 @@ public class ScanDBManager {
                         move_1 = rs.getInt(11);
                         move_2 = rs.getInt(12);
 
-                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel);
+                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel, null);
                         break;
                     case Monocle:
                         lat = rs.getDouble(2);
@@ -337,7 +338,7 @@ public class ScanDBManager {
                         move_1 = rs.getInt(9);
                         move_2 = rs.getInt(10);
 
-                        raidSpawn = new RaidSpawn("unkn", gymId, lat, lon, team, raidEnd, battleStart, bossId, (bossId > 0 ? Pokemon.getRaidBossCp(bossId, raidLevel) : 0), move_1, move_2, raidLevel);
+                        raidSpawn = new RaidSpawn("unkn", gymId, lat, lon, team, raidEnd, battleStart, bossId, (bossId > 0 ? Pokemon.getRaidBossCp(bossId, raidLevel) : 0), move_1, move_2, raidLevel, null);
                         break;
                     case RealDeviceMap:
                         name = rs.getString(1);
@@ -351,8 +352,9 @@ public class ScanDBManager {
                         raidLevel = rs.getInt(10);
                         move_1 = rs.getInt(11);
                         move_2 = rs.getInt(12);
+                        Integer form = (Integer) rs.getObject(13);
 
-                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel);
+                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel, form);
                         break;
                 }
 
@@ -491,7 +493,8 @@ public class ScanDBManager {
                         "raid_pokemon_cp," +
                         "raid_level," +
                         "raid_pokemon_move_1," +
-                        "raid_pokemon_move_2 " +
+                        "raid_pokemon_move_2," +
+                        "raid_pokemon_form " +
                         "FROM gym " +
                         "WHERE " + knownIdQMarks + " raid_end_timestamp > " +
                         (scannerDb.getProtocol().equals("mysql")
@@ -613,8 +616,9 @@ public class ScanDBManager {
                         raidLevel = rs.getInt(10);
                         move_1 = rs.getInt(11);
                         move_2 = rs.getInt(12);
+                        Integer form = rs.getInt(13);
 
-                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel);
+                        raidSpawn = new RaidSpawn(name, gymId, lat, lon, team, raidEnd, battleStart, bossId, bossCp, move_1, move_2, raidLevel, form);
                         break;
                 }
                 dbLog.debug(raidSpawn.toString());
