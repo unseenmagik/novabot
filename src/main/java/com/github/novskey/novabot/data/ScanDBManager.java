@@ -824,7 +824,7 @@ public class ScanDBManager {
                         "weather," +
                         "id " +
                         "FROM pokemon " +
-                        "WHERE first_seen_timestamp >= " +
+                        "WHERE changed >= " +
                         (scannerDb.getProtocol().equals("mysql")
                                 ? "UNIX_TIMESTAMP(? - INTERVAL 1 SECOND)"
                                 : "extract(epoch from (?::timestamptz - INTERVAL '1' SECOND)) ") +
