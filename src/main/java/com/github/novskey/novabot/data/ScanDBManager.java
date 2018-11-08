@@ -823,6 +823,8 @@ public class ScanDBManager {
                         "level," +
                         "weather," +
                         "id " +
+                        "weight " + 
+                        "size " +
                         "FROM pokemon " +
                         "WHERE changed >= " +
                         (scannerDb.getProtocol().equals("mysql")
@@ -996,7 +998,9 @@ public class ScanDBManager {
                         level = (Integer) rs.getObject(13);
                         weather = rs.getInt(14);
                         encounter_id = rs.getString(15);
-                        pokeSpawn = new PokeSpawn(id, lat, lon, disappearTime, attack, defense, stamina, move1, move2, 0, 0, gender, form, cp, level, weather, encounter_id);
+                        weight = rs.getFloat(16);
+                        height = rs.getFloat(17);
+                        pokeSpawn = new PokeSpawn(id, lat, lon, disappearTime, attack, defense, stamina, move1, move2, weight, height, gender, form, cp, level, weather, encounter_id);
                         break;
                 }
 
