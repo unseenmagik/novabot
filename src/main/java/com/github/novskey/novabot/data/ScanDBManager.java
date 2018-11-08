@@ -822,8 +822,8 @@ public class ScanDBManager {
                         "cp," +
                         "level," +
                         "weather," +
-                        "id " +
-                        "weight " + 
+                        "id, " +
+                        "weight, " + 
                         "size " +
                         "FROM pokemon " +
                         "WHERE changed >= " +
